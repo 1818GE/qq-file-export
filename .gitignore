@@ -1,0 +1,49 @@
+# 操作系统产生的杂物
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+
+# 编辑器 / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.\#*
+\#*\#
+
+# 备份文件
+*.bak
+*.orig
+*.rej
+
+# Python 缓存与打包产物
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# 运行时临时产物
+_out/
+*.tmp
+*.log
+*.bak-*
+*_纯文本.txt
+
+# 调试截图（crop_screenshot.ps1 的现场产物，默认写在系统临时目录，
+# 若显式指定到本目录则同样忽略）
+qq_crop_*.png
+_dbg_*.png

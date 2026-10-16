@@ -1,0 +1,62 @@
+{
+  "skill": "qq-file-export",
+  "version": "1.0.0",
+  "description": "qq-file-export 的运行期依赖声明。check_environment.py 按本文件逐项自检。",
+  "dependencies": [
+    {
+      "name": "windows-mcp",
+      "type": "mcp-connector",
+      "required": true,
+      "description": "本机 GUI 自动化连接器，提供 snapshot / click / type / scroll / clipboard / wait / screenshot / powershell 等工具。QQ 文件消息不携带下载 URL 与 rkey，CDN 直连和纯命令行通道均已验证不可行，导出只能驱动 QQ 客户端的 GUI 另存为，因此本依赖不可省略。",
+      "tools_used": [
+        "snapshot",
+        "click",
+        "type",
+        "scroll",
+        "clipboard",
+        "shortcut",
+        "wait",
+        "screenshot"
+      ],
+      "check": {
+        "method": "config-and-process",
+        "config_glob": "~/.hanako/agents/*/config.yaml",
+        "config_block": "extensions.connector",
+        "config_key": "windows-mcp.enabled",
+        "process_name": "windows-mcp.exe"
+      },
+      "install_hint": "通过平台的连接器管理入口启用 windows-mcp，不要手工编辑 config.yaml；启用后需新会话生效。",
+      "degraded_path": "见 setup-guide.md「降级路径」：转用户手动操作，并在 findings 中记录工具名、报错与替代路径。"
+    }
+  ],
+  "runtime": [
+    {
+      "name": "QQ 客户端",
+      "type": "application",
+      "required": true,
+      "description": "本机 QQ 进程需在运行且已登录；主窗口标题非空才算面板可用。",
+      "check": {
+        "method": "process-and-window",
+        "process_name": "QQ.exe"
+      }
+    },
+    {
+      "name": "PowerShell",
+      "type": "runtime",
+      "required": true,
+      "description": "scripts/ 下三个脚本的运行环境。Windows PowerShell 5.1 可用但会把无 BOM 的 UTF-8 脚本按 ANSI 解析，中文提示可能乱码；推荐 PowerShell 7+（pwsh）。",
+      "check": {
+        "method": "which",
+        "commands": [
+          "pwsh",
+          "powershell"
+        ]
+      }
+    }
+  ],
+  "verify": {
+    "command": "python check_environment.py",
+    "exit_code_ready": 0,
+    "exit_code_not_ready": 1
+  }
+}
